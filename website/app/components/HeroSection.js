@@ -1,3 +1,5 @@
+'use client'
+
 import Scene3D from './3d/Scene3D'
 
 export default function HeroSection() {

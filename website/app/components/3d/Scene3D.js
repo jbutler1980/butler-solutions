@@ -1,3 +1,5 @@
+'use client'
+
 import { Suspense } from 'react'
 import ErrorBoundary from './ErrorBoundary'
 import ThreeScene from './ThreeScene'

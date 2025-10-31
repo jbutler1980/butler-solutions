@@ -1,0 +1,19 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: butler-solutions-web
+  namespace: production-web
+  labels:
+    app: butler-solutions-web
+    app.kubernetes.io/name: butler-solutions-web
+    app.kubernetes.io/part-of: butler-web-platform
+spec:
+  entryPoints:
+    - web
+  routes:
+    - kind: Rule
+      match: Host(`butler.solutions`) || Host(`www.butler.solutions`) || Host(`test.butler.solutions`)
+      services:
+        - name: butler-solutions-web
+          namespace: production-web
+          port: 80
