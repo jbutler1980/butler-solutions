@@ -111,13 +111,18 @@ jobs:
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Create Pull Request
+      - name: Configure git author
         if: steps.diff.outputs.changed == 'true'
-        uses: peter-evans/create-pull-request@v7
-        with:
-          branch: automation/update-image-${{ github.sha }}
-          delete-branch: true
-          commit-message: "chore: update web image digest"
-          title: "chore: sync butler-solutions-web image digest (${{ github.sha }})"
-          body: |
-            Automated update to align the production manifest with image `${{ env.IMAGE_NAME }}@${{ needs.build-and-push.outputs.image-digest }}` built from ${{ github.sha }}.
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Commit manifest update
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          git add k8s/production-web/deployment.yaml
+          git commit -m "chore: update web image digest"
+
+      - name: Push manifest update
+        if: steps.diff.outputs.changed == 'true'
+        run: git push origin HEAD:main
