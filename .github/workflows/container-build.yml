@@ -83,26 +83,24 @@ jobs:
             echo "Image digest missing; skipping update."
             exit 0
           fi
-          python - <<'PY'
-            from pathlib import Path
-            from ruamel.yaml import YAML
-            import os
-
-            image_name = os.environ["IMAGE_NAME"]
-            image_digest = os.environ["IMAGE_DIGEST"]
-
-            target = Path("k8s/production-web/deployment.yaml")
-            yaml = YAML()
-            yaml.preserve_quotes = True
-
-            data = yaml.load(target.read_text())
-            containers = data["spec"]["template"]["spec"].get("containers", [])
-            if containers:
-                containers[0]["image"] = f"{image_name}@{image_digest}"
-
-            with target.open("w") as fh:
-                yaml.dump(data, fh)
-          PY
+          {
+            printf 'from pathlib import Path\n'
+            printf 'from ruamel.yaml import YAML\n'
+            printf 'import os\n\n'
+            printf 'image_name = os.environ["IMAGE_NAME"]\n'
+            printf 'image_digest = os.environ["IMAGE_DIGEST"]\n\n'
+            printf 'target = Path("k8s/production-web/deployment.yaml")\n'
+            printf 'yaml = YAML()\n'
+            printf 'yaml.preserve_quotes = True\n\n'
+            printf 'data = yaml.load(target.read_text())\n'
+            printf 'containers = data["spec"]["template"]["spec"].get("containers", [])\n'
+            printf 'if containers:\n'
+            printf '    containers[0]["image"] = f"{image_name}@{image_digest}"\n\n'
+            printf 'with target.open("w") as fh:\n'
+            printf '    yaml.dump(data, fh)\n'
+          } > update_image.py
+          python update_image.py
+          rm update_image.py
 
       - name: Detect manifest changes
         id: diff
