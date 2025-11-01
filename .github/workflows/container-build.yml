@@ -25,7 +25,9 @@ jobs:
 
       - name: Read package version
         id: version
-        run: echo "value=$(node -p \"require('./website/package.json').version\")" >> \"$GITHUB_OUTPUT\"
+        run: |
+          VERSION=$(node -p "require('./website/package.json').version")
+          echo "value=$VERSION" >> "$GITHUB_OUTPUT"
 
       - name: Set up Node.js cache key
         id: node-cache-key
