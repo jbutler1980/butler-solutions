@@ -24,6 +24,9 @@ export default function ParticleField() {
   }, [])
 
   useFrame((state, delta) => {
+    if (!points.current) {
+      return
+    }
     points.current.rotation.x += delta * 0.1
     points.current.rotation.y += delta * 0.1
   })

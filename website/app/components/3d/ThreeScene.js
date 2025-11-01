@@ -5,9 +5,9 @@ import { OrbitControls } from '@react-three/drei'
 import Logo3D from './Logo3D'
 import ParticleField from './ParticleField'
 
-export default function ThreeScene() {
+export default function ThreeScene({ fallback }) {
   return (
-    <Canvas camera={{ position: [0, 0, 5] }}>
+    <Canvas className="h-full w-full" camera={{ position: [0, 0, 5] }} fallback={fallback}>
       <ambientLight intensity={0.5} />
       <pointLight position={[10, 10, 10]} />
       <Logo3D />

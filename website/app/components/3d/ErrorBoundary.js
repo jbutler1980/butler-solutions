@@ -17,10 +17,11 @@ export default class ErrorBoundary extends Component {
   }
 
   render() {
+    const { fallback, children } = this.props
     if (this.state.hasError) {
-      return <div>Something went wrong loading the 3D scene.</div>
+      return fallback ?? <div>Something went wrong loading the 3D scene.</div>
     }
 
-    return this.props.children
+    return children
   }
 }

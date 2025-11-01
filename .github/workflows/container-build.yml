@@ -16,6 +16,8 @@ env:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+    outputs:
+      image-digest: ${{ steps.build.outputs.digest }}
     permissions:
       contents: read
       packages: write
@@ -40,6 +42,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push image
+        id: build
         uses: docker/build-push-action@v5
         with:
           context: ./website
@@ -47,6 +50,69 @@ jobs:
           push: true
           tags: |
             ${{ env.IMAGE_NAME }}:${{ github.sha }}
-            ${{ env.IMAGE_NAME }}:latest
           cache-from: type=registry,ref=${{ env.IMAGE_NAME }}:buildcache
           cache-to: type=registry,ref=${{ env.IMAGE_NAME }}:buildcache,mode=max
+
+  update-manifest:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install YAML tooling
+        run: pip install --quiet ruamel.yaml
+
+      - name: Update deployment image digest
+        env:
+          IMAGE_NAME: ${{ env.IMAGE_NAME }}
+          IMAGE_DIGEST: ${{ needs.build-and-push.outputs.image-digest }}
+        run: |
+          if [ -z "$IMAGE_DIGEST" ]; then
+            echo "Image digest missing; skipping update."
+            exit 0
+          fi
+          python - <<'PY'
+from pathlib import Path
+from ruamel.yaml import YAML
+import os
+
+image_name = os.environ["IMAGE_NAME"]
+image_digest = os.environ["IMAGE_DIGEST"]
+
+target = Path("k8s/production-web/deployment.yaml")
+yaml = YAML()
+yaml.preserve_quotes = True
+
+data = yaml.load(target.read_text())
+containers = data["spec"]["template"]["spec"].get("containers", [])
+if containers:
+    containers[0]["image"] = f"{image_name}@{image_digest}"
+
+with target.open("w") as fh:
+    yaml.dump(data, fh)
+PY
+
+      - name: Detect manifest changes
+        id: diff
+        run: |
+          if git diff --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create Pull Request
+        if: steps.diff.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: automation/update-image-${{ github.sha }}
+          delete-branch: true
+          commit-message: chore: update web image digest
+          title: chore: sync butler-solutions-web image digest (${{ github.sha }})
+          body: |
+            Automated update to align the production manifest with image `${{ env.IMAGE_NAME }}@${{ needs.build-and-push.outputs.image-digest }}` built from ${{ github.sha }}.

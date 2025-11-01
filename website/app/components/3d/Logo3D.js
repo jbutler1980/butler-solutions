@@ -7,6 +7,9 @@ export default function Logo3D() {
   const meshRef = useRef()
 
   useFrame((state, delta) => {
+    if (!meshRef.current) {
+      return
+    }
     meshRef.current.rotation.y += delta * 0.5
   })
 
