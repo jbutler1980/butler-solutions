@@ -27,39 +27,40 @@ spec:
         app.kubernetes.io/part-of: butler-web-platform
     spec:
       containers:
-        - name: web
-          image: ghcr.io/jbutler1980/butler-solutions-web@sha256:59d9e7c9a7ad0b41d3aac67bcd4061b7112489b26f29d91b45b5c8839e5ecd04
-          imagePullPolicy: Always
-          env:
-            - name: NODE_ENV
-              value: production
-            - name: PORT
-              value: "3000"
-          ports:
-            - name: http
-              containerPort: 3000
-              protocol: TCP
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
-            initialDelaySeconds: 10
-            periodSeconds: 10
-            timeoutSeconds: 3
-            failureThreshold: 3
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-            initialDelaySeconds: 30
-            periodSeconds: 20
-            timeoutSeconds: 3
-            failureThreshold: 3
-          resources:
-            requests:
-              cpu: 250m
-              memory: 256Mi
-            limits:
-              cpu: 750m
-              memory: 512Mi
+      - name: web
+        image: 
+          ghcr.io/jbutler1980/butler-solutions-web@sha256:a748ce8c124feeb28cdc079650cc98b790bc2139094cc82745c5a08408e8d1cd
+        imagePullPolicy: Always
+        env:
+        - name: NODE_ENV
+          value: production
+        - name: PORT
+          value: "3000"
+        ports:
+        - name: http
+          containerPort: 3000
+          protocol: TCP
+        readinessProbe:
+          httpGet:
+            path: /
+            port: http
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 3
+          failureThreshold: 3
+        livenessProbe:
+          httpGet:
+            path: /
+            port: http
+          initialDelaySeconds: 30
+          periodSeconds: 20
+          timeoutSeconds: 3
+          failureThreshold: 3
+        resources:
+          requests:
+            cpu: 250m
+            memory: 256Mi
+          limits:
+            cpu: 750m
+            memory: 512Mi
       terminationGracePeriodSeconds: 30
