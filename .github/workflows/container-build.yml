@@ -77,25 +77,25 @@ jobs:
             exit 0
           fi
           python - <<'PY'
-from pathlib import Path
-from ruamel.yaml import YAML
-import os
+          from pathlib import Path
+          from ruamel.yaml import YAML
+          import os
 
-image_name = os.environ["IMAGE_NAME"]
-image_digest = os.environ["IMAGE_DIGEST"]
+          image_name = os.environ["IMAGE_NAME"]
+          image_digest = os.environ["IMAGE_DIGEST"]
 
-target = Path("k8s/production-web/deployment.yaml")
-yaml = YAML()
-yaml.preserve_quotes = True
+          target = Path("k8s/production-web/deployment.yaml")
+          yaml = YAML()
+          yaml.preserve_quotes = True
 
-data = yaml.load(target.read_text())
-containers = data["spec"]["template"]["spec"].get("containers", [])
-if containers:
-    containers[0]["image"] = f"{image_name}@{image_digest}"
+          data = yaml.load(target.read_text())
+          containers = data["spec"]["template"]["spec"].get("containers", [])
+          if containers:
+              containers[0]["image"] = f"{image_name}@{image_digest}"
 
-with target.open("w") as fh:
-    yaml.dump(data, fh)
-PY
+          with target.open("w") as fh:
+              yaml.dump(data, fh)
+          PY
 
       - name: Detect manifest changes
         id: diff
