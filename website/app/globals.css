@@ -2,23 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
 body {
-  color: rgb(var(--foreground-rgb));
+  @apply bg-midnight text-slate antialiased;
   background:
-    linear-gradient(to bottom, transparent, rgb(var(--background-end-rgb))),
-    rgb(var(--background-start-rgb));
+    radial-gradient(120% 120% at 80% 0%, rgba(93, 123, 255, 0.15) 0%, rgba(5, 6, 17, 0) 60%),
+    radial-gradient(140% 140% at 20% 100%, rgba(194, 91, 255, 0.16) 0%, rgba(5, 6, 17, 0) 65%),
+    #050611;
+}
+
+.glass-panel {
+  @apply bg-surface-glass backdrop-blur-2xl border border-white/10 shadow-xl;
 }

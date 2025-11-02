@@ -4,6 +4,7 @@ import ServicesSection from './components/ServicesSection'
 import CaseStudiesSection from './components/CaseStudiesSection'
 import BlogSection from './components/BlogSection'
 import ContactSection from './components/ContactSection'
+import AIStackSection from './components/AIStackSection'
 
 export default function Home() {
   return (
@@ -11,6 +12,7 @@ export default function Home() {
       <HeroSection />
       <AboutSection />
       <ServicesSection />
+      <AIStackSection />
       <CaseStudiesSection />
       <BlogSection />
       <ContactSection />
