@@ -7,6 +7,8 @@ import CaseStudiesSection from './components/CaseStudiesSection'
 import BlogSection from './components/BlogSection'
 import ContactSection from './components/ContactSection'
 
+export const revalidate = 300
+
 export default function Home() {
   return (
     <main>
