@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
+import { motion } from 'framer-motion'
 
 const links = [
   { label: 'Platform', href: '#platform' },
@@ -17,15 +18,16 @@ export default function Navigation() {
   const renderedLinks = useMemo(
     () =>
       links.map((link) => (
-        <Link
-          key={link.href}
-          href={link.href}
-          className="text-sm font-medium uppercase tracking-[0.2em] text-slate/80 transition hover:text-aqua"
-          onClick={() => setOpen(false)}
-          scroll
-        >
-          {link.label}
-        </Link>
+        <motion.div key={link.href} whileHover={{ scale: 1.05 }}>
+          <Link
+            href={link.href}
+            className="text-sm font-medium uppercase tracking-[0.2em] text-slate/80 transition hover:text-aqua"
+            onClick={() => setOpen(false)}
+            scroll
+          >
+            {link.label}
+          </Link>
+        </motion.div>
       )),
     [],
   )

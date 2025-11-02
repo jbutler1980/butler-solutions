@@ -38,11 +38,27 @@ module.exports = {
       animation: {
         'slow-spin': 'spin 18s linear infinite',
         pulseGlow: 'pulseGlow 4s ease-in-out infinite',
+        marquee: 'marquee 18s linear infinite',
+        marqueeAlt: 'marqueeAlt 26s linear infinite',
+        aurora: 'auroraShift 24s ease-in-out infinite',
       },
       keyframes: {
         pulseGlow: {
           '0%, 100%': { opacity: 0.5, transform: 'scale(0.98)' },
           '50%': { opacity: 1, transform: 'scale(1.02)' },
+        },
+        marquee: {
+          '0%': { transform: 'translateX(0%)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
+        marqueeAlt: {
+          '0%': { transform: 'translateX(-50%)' },
+          '100%': { transform: 'translateX(0%)' },
+        },
+        auroraShift: {
+          '0%': { transform: 'translate3d(-10%, -5%, 0) scale(1)' },
+          '50%': { transform: 'translate3d(10%, 8%, 0) scale(1.05)' },
+          '100%': { transform: 'translate3d(-10%, -5%, 0) scale(1)' },
         },
       },
     },

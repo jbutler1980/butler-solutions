@@ -1,3 +1,7 @@
+'use client'
+
+import { motion } from 'framer-motion'
+
 const contactSignals = [
   { label: 'Global Command HQ', value: 'Arlington • London • Canberra' },
   { label: 'Mission Console', value: 'missions@butler.solutions' },
@@ -9,7 +13,13 @@ export default function ContactSection() {
     <section id="contact" className="relative isolate py-28">
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-magenta/10 via-transparent to-midnight" />
       <div className="mx-auto flex max-w-6xl flex-col gap-10 px-6 md:px-10 lg:flex-row">
-        <div className="flex-1 rounded-3xl border border-white/10 bg-white/[0.07] p-8 backdrop-blur-xl">
+        <motion.div
+          className="flex-1 rounded-3xl border border-white/10 bg-white/[0.07] p-8 backdrop-blur-xl"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
+        >
           <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1 text-xs uppercase tracking-[0.35em] text-electric/80">
             Initiate Briefing
           </span>
@@ -17,8 +27,7 @@ export default function ContactSection() {
             Ready to architect your edge intelligence future?
           </h2>
           <p className="mt-4 text-sm text-slate/70">
-            Share your mission priorities and our architects will schedule a private session to shape your trajectory,
-            from tactical prototypes to fully sovereign platforms.
+            Share your mission priorities and our architects will coordinate a private session to align roadmaps—from rapid prototypes to fully sovereign platforms.
           </p>
           <dl className="mt-8 space-y-4 text-sm text-slate/60">
             {contactSignals.map((signal) => (
@@ -28,9 +37,15 @@ export default function ContactSection() {
               </div>
             ))}
           </dl>
-        </div>
+        </motion.div>
 
-        <div className="flex-1 rounded-3xl border border-white/10 bg-black/30 p-8 shadow-glow backdrop-blur-xl">
+        <motion.div
+          className="flex-1 rounded-3xl border border-white/10 bg-black/30 p-8 shadow-glow backdrop-blur-xl"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.9, ease: 'easeOut' }}
+        >
           <form className="grid gap-5">
             <label className="text-xs uppercase tracking-[0.3em] text-slate/60">
               Name
@@ -50,9 +65,7 @@ export default function ContactSection() {
             </label>
             <label className="text-xs uppercase tracking-[0.3em] text-slate/60">
               Operational Focus
-              <select
-                className="mt-2 w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white focus:border-electric/60 focus:outline-none"
-              >
+              <select className="mt-2 w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white focus:border-electric/60 focus:outline-none">
                 <option value="">Select priority</option>
                 <option value="edge">Edge Platform Modernization</option>
                 <option value="aiops">AI Ops Automation</option>
@@ -74,17 +87,11 @@ export default function ContactSection() {
             >
               Dispatch Briefing Request
               <svg viewBox="0 0 24 24" className="size-4" aria-hidden="true">
-                <path
-                  d="M5 12h14M13 6l6 6-6 6"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
+                <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </button>
           </form>
-        </div>
+        </motion.div>
       </div>
     </section>
   )

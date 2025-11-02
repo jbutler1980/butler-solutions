@@ -1,3 +1,7 @@
+'use client'
+
+import { motion } from 'framer-motion'
+
 const featured = {
   client: 'Trident Aerospace Command',
   challenge: 'Global edge operations required sovereign autonomy with minute-level situational awareness.',
@@ -5,8 +9,8 @@ const featured = {
     'Butler orchestrated a unified command fabric across 11 nations, delivering deterministic telemetry with resilient AI copilots.',
   metrics: [
     { label: 'Rollout Velocity', value: '→ 14x', detail: 'Mission kits from git to runway in 27 minutes' },
-    { label: 'Anomaly Detection', value: '↓ 81%', detail: 'Critical incidents before human escalation' },
-    { label: 'Compliance Evidence', value: '100%', detail: 'Continuous STIG + SOC2 reporting' },
+    { label: 'Anomaly Detection', value: '↓ 81%', detail: 'Critical incidents caught before escalation' },
+    { label: 'Compliance Evidence', value: '100%', detail: 'Continuous STIG + SOC 2 reporting' },
   ],
 }
 
@@ -19,22 +23,28 @@ const supporting = [
   {
     name: 'Quantum Logistics Alliance',
     summary: 'AI copilots balancing inventory and fleet logistics across 42 distribution hubs in real time.',
-    results: ['Latency cut by 68%', '4x deployment frequency', '$2.4M cross-network savings'],
+    results: ['Latency cut by 68%', '4× deployment frequency', '$2.4M cross-network savings'],
   },
 ]
 
 const timeline = [
   { label: 'Ignition', detail: 'Blueprint, capability heat-map, and sovereignty posture in 10 days.' },
-  { label: 'Orbit', detail: 'Mission kits piloted and hardened, domain copilots trained, compliance guardrails live.' },
-  { label: 'Continuum', detail: 'Joint command cell with shared runbooks, AI stewardship, and reliability governance.' },
+  { label: 'Orbit', detail: 'Mission kits hardened, copilots trained, compliance guardrails activated.' },
+  { label: 'Continuum', detail: 'Joint command cadence with shared runbooks, AI stewardship, and reliability governance.' },
 ]
 
 export default function CaseStudiesSection() {
   return (
     <section id="case-studies" className="relative isolate py-28">
-      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-galaxy/30 to-midnight" />
+      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-galaxy/20 to-midnight" />
       <div className="mx-auto max-w-6xl px-6 md:px-10">
-        <div className="flex flex-col gap-4 text-center md:flex-row md:items-end md:justify-between md:text-left">
+        <motion.div
+          className="flex flex-col gap-4 text-center md:flex-row md:items-end md:justify-between md:text-left"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
+        >
           <div>
             <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1 text-xs uppercase tracking-[0.4em] text-magenta/70">
               Case Command
@@ -44,14 +54,18 @@ export default function CaseStudiesSection() {
             </h2>
           </div>
           <p className="max-w-xl text-sm text-slate/70 md:text-right">
-            We partner with executive, mission, and platform leaders to design edge AI systems that survive contested
-            conditions and pass the strictest compliance bars.
+            We partner with mission, platform, and compliance leadership to design edge AI systems that withstand contested conditions and pass the toughest audits.
           </p>
-        </div>
+        </motion.div>
 
         <div className="mt-14 grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
-          <article className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.08] p-8 backdrop-blur-2xl">
-            <div className="absolute inset-0 bg-gradient-to-b from-white/5 via-transparent to-transparent opacity-0 transition hover:opacity-100" />
+          <motion.article
+            className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.08] p-8 backdrop-blur-2xl"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{ duration: 0.9, ease: 'easeOut' }}
+          >
             <header className="flex items-center justify-between gap-4">
               <div>
                 <p className="text-xs uppercase tracking-[0.35em] text-slate/60">Featured Program</p>
@@ -65,20 +79,29 @@ export default function CaseStudiesSection() {
             <p className="mt-3 text-sm text-slate/60">{featured.outcome}</p>
             <dl className="mt-8 grid gap-4 text-sm text-slate/60 md:grid-cols-3">
               {featured.metrics.map((metric) => (
-                <div key={metric.label} className="rounded-2xl border border-white/10 bg-black/20 p-4">
-                  <dt className="text-xs uppercase tracking-[0.35em] text-slate/50">{metric.label}</dt>
+                <motion.div
+                  key={metric.label}
+                  className="rounded-2xl border border-white/10 bg-black/20 p-4"
+                  whileHover={{ borderColor: 'rgba(77, 243, 255, 0.5)', y: -6 }}
+                >
+                  <dt className="text-xs uppercase tracking-[0.35em] text-slate/60">{metric.label}</dt>
                   <dd className="mt-2 font-heading text-2xl font-semibold text-white">{metric.value}</dd>
                   <p className="mt-2 text-[11px]">{metric.detail}</p>
-                </div>
+                </motion.div>
               ))}
             </dl>
-          </article>
+          </motion.article>
 
           <div className="flex flex-col gap-6">
-            {supporting.map((program) => (
-              <article
+            {supporting.map((program, index) => (
+              <motion.article
                 key={program.name}
-                className="rounded-3xl border border-white/10 bg-white/[0.07] p-6 backdrop-blur-xl transition hover:border-electric/40 hover:shadow-glow"
+                className="rounded-3xl border border-white/10 bg-white/[0.07] p-6 backdrop-blur-xl"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.4 }}
+                transition={{ duration: 0.7, ease: 'easeOut', delay: index * 0.1 }}
+                whileHover={{ y: -8, borderColor: 'rgba(93, 123, 255, 0.5)' }}
               >
                 <header className="flex items-center justify-between">
                   <h3 className="font-heading text-lg font-semibold text-white">{program.name}</h3>
@@ -93,16 +116,22 @@ export default function CaseStudiesSection() {
                     </li>
                   ))}
                 </ul>
-              </article>
+              </motion.article>
             ))}
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col gap-6 rounded-3xl border border-white/10 bg-black/20 p-8 text-sm text-slate/70 md:flex-row md:items-center md:justify-between">
+        <motion.div
+          className="mt-12 flex flex-col gap-6 rounded-3xl border border-white/10 bg-black/20 p-8 text-sm text-slate/70 md:flex-row md:items-center md:justify-between"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.7, ease: 'easeOut' }}
+        >
           <div className="max-w-md">
             <h3 className="font-heading text-lg font-semibold text-white">Mission Continuum</h3>
             <p className="mt-2 text-sm text-slate/60">
-              Every engagement transitions from ignition to shared stewardship with a joint command cadence.
+              Every program transitions from ignition to shared stewardship with a joint command cadence.
             </p>
           </div>
           <div className="flex flex-1 flex-col gap-4 md:flex-row md:items-center md:justify-end">
@@ -113,7 +142,7 @@ export default function CaseStudiesSection() {
               </div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   )

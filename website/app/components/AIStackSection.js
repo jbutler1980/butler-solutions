@@ -1,5 +1,7 @@
 'use client'
 
+import { motion } from 'framer-motion'
+
 const layers = [
   {
     name: 'Sense',
@@ -38,7 +40,13 @@ export default function AIStackSection() {
     <section id="ai-stack" className="relative isolate py-28">
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-electric/10 via-transparent to-magenta/10" />
       <div className="mx-auto flex max-w-6xl flex-col gap-12 px-6 md:px-10 lg:flex-row">
-        <div className="flex-1">
+        <motion.div
+          className="flex-1"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
+        >
           <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1 text-xs uppercase tracking-[0.4em] text-aqua">
             Butler Atlas Stack
           </span>
@@ -46,13 +54,20 @@ export default function AIStackSection() {
             AI that is accountable, auditable, and battle-tested.
           </h2>
           <p className="mt-4 text-sm text-slate/70">
-            Butler Atlas™ fuses data mesh, AI copilots, and autonomous infrastructure into a unified knowledge system
-            that adapts to your mission tempo.
+            Butler Atlas™ fuses data mesh, AI copilots, and autonomous infrastructure into a unified knowledge system that adapts to your mission tempo.
           </p>
 
           <div className="mt-8 space-y-6">
-            {layers.map((layer) => (
-              <div key={layer.name} className="rounded-3xl border border-white/10 bg-white/[0.06] p-6 backdrop-blur-xl">
+            {layers.map((layer, index) => (
+              <motion.div
+                key={layer.name}
+                className="rounded-3xl border border-white/10 bg-white/[0.06] p-6 backdrop-blur-xl"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.4 }}
+                transition={{ duration: 0.7, ease: 'easeOut', delay: index * 0.1 }}
+                whileHover={{ y: -8, borderColor: 'rgba(77, 243, 255, 0.5)' }}
+              >
                 <div className="flex items-center justify-between">
                   <h3 className="font-heading text-lg font-semibold text-white">{layer.name}</h3>
                   <span className="text-[10px] uppercase tracking-[0.3em] text-slate/60">Atlas Node</span>
@@ -66,17 +81,22 @@ export default function AIStackSection() {
                     </li>
                   ))}
                 </ul>
-              </div>
+              </motion.div>
             ))}
           </div>
-        </div>
+        </motion.div>
 
-        <div className="flex-1 rounded-3xl border border-white/10 bg-black/30 p-6 shadow-glow backdrop-blur-xl">
+        <motion.div
+          className="flex-1 rounded-3xl border border-white/10 bg-black/30 p-6 shadow-glow backdrop-blur-xl"
+          initial={{ opacity: 0, y: 60 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.9, ease: 'easeOut' }}
+        >
           <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-electric/20 via-transparent to-magenta/20 p-6 text-sm text-slate/70">
             <h3 className="font-heading text-lg font-semibold text-white">Mission Telemetry Loop</h3>
             <p className="mt-3 text-sm">
-              Sense → Decide → Act loops stream into a shared Atlas timeline. Every automation includes provenance,
-              human approvals, and performance outcomes.
+              Sense → Decide → Act loops stream into a shared Atlas timeline. Every automation includes provenance, human approvals, and performance outcomes.
             </p>
             <div className="mt-6 grid gap-6 md:grid-cols-3">
               {signalCards.map((card) => (
@@ -104,7 +124,7 @@ export default function AIStackSection() {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   )

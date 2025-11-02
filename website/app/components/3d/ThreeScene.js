@@ -2,6 +2,8 @@
 
 import { Canvas } from '@react-three/fiber'
 import { Float, Stars, Line, Sphere } from '@react-three/drei'
+import { EffectComposer, Bloom, ChromaticAberration, Noise, Vignette } from '@react-three/postprocessing'
+import { BlendFunction } from 'postprocessing'
 import { useMemo } from 'react'
 import Logo3D from './Logo3D'
 import ParticleField from './ParticleField'
@@ -44,7 +46,7 @@ export default function ThreeScene({ fallback }) {
       className="h-full w-full"
       camera={{ position: [0, 0, 5], fov: 50 }}
       dpr={[1, 2]}
-      gl={{ alpha: true }}
+      gl={{ alpha: true, powerPreference: 'high-performance', antialias: false }}
       fallback={fallback}
     >
       <ambientLight intensity={0.3} />
@@ -57,6 +59,12 @@ export default function ThreeScene({ fallback }) {
       </Float>
       <SignalPulse />
       <NetworkHalo />
+      <EffectComposer multisampling={0}>
+        <Bloom luminanceThreshold={0.2} luminanceSmoothing={0.9} intensity={0.8} height={300} />
+        <ChromaticAberration blendFunction={BlendFunction.NORMAL} offset={[0.0015, 0.0015]} />
+        <Noise opacity={0.08} blendFunction={BlendFunction.ADD} />
+        <Vignette eskil={false} offset={0.2} darkness={0.7} />
+      </EffectComposer>
     </Canvas>
   )
 }

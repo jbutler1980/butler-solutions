@@ -2,6 +2,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import Navigation from './components/Navigation'
 import Footer from './components/Footer'
+import SmoothScrollProvider from './components/SmoothScrollProvider'
 import { Space_Grotesk, Manrope, IBM_Plex_Mono } from 'next/font/google'
 
 const heading = Space_Grotesk({
@@ -36,6 +37,7 @@ export default function RootLayout({
       <body
         className={`${heading.variable} ${body.variable} ${mono.variable} font-body bg-midnight text-slate selection:bg-electric/20 selection:text-aqua`}
       >
+        <SmoothScrollProvider />
         <Navigation />
         <main className="relative pt-24">{children}</main>
         <Footer />
