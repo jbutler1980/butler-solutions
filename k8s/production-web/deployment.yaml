@@ -29,7 +29,7 @@ spec:
       containers:
       - name: web
         image: 
-          ghcr.io/jbutler1980/butler-solutions-web@sha256:a748ce8c124feeb28cdc079650cc98b790bc2139094cc82745c5a08408e8d1cd
+          ghcr.io/jbutler1980/butler-solutions-web@sha256:88cfb9255ef0229b64fdaf14850b8ec7e13fafe6dfedf56f334e586b1192e829
         imagePullPolicy: Always
         env:
         - name: NODE_ENV
